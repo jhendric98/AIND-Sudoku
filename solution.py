@@ -34,18 +34,11 @@ def naked_twins(values):
 
     # Find all instances of naked twins
     # Eliminate the naked twins as possibilities for their peers
-    """Eliminate values using the naked twins strategy.
-        Args:
-            values(dict): a dictionary of the form {'box_name': '123456789', ...}
-        Returns:
-            the values dictionary with the naked twins eliminated from peers.
-        """
-
-    # First select boxes with 2 entries
     potential_twins = [box for box in values.keys() if len(values[box]) == 2]
+
     # Collect boxes that have the same elements
-    naked_twins = [[box1, box2] for box1 in potential_twins \
-                   for box2 in peers[box1] \
+    naked_twins = [[box1, box2] for box1 in potential_twins
+                   for box2 in peers[box1]
                    if set(values[box1]) == set(values[box2])]
 
     # For each pair of naked twins,

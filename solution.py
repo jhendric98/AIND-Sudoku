@@ -36,10 +36,14 @@ def naked_twins(values):
     # Eliminate the naked twins as possibilities for their peers
     potential_twins = [box for box in values.keys() if len(values[box]) == 2]
 
+    print(potential_twins)
+
     # Collect boxes that have the same elements
     naked_twins = [[box1, box2] for box1 in potential_twins
                    for box2 in peers[box1]
                    if set(values[box1]) == set(values[box2])]
+
+    print(naked_twins)
 
     # For each pair of naked twins,
     for i in range(len(naked_twins)):
@@ -63,7 +67,9 @@ def cross(A, B):
 
 
 # initial setup of environment
+# all potential boxes
 boxes = cross(rows, cols)
+print(boxes)
 row_units = [cross(r, cols) for r in rows]
 column_units = [cross(rows, c) for c in cols]
 square_units = [cross(rs, cs) for rs in ('ABC','DEF','GHI') for cs in ('123','456','789')]
@@ -78,7 +84,7 @@ else:
     unitlist = row_units + column_units + square_units
 
 units = dict((s, [u for u in unitlist if s in u]) for s in boxes)
-peers = dict((s, set(sum(units[s],[]))-set([s])) for s in boxes)
+peers = dict((s, set(sum(units[s], []))-set([s])) for s in boxes)
 
 
 def grid_values(grid):

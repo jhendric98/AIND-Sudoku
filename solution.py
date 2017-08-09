@@ -67,12 +67,19 @@ def cross(A, B):
 
 
 # initial setup of environment
-# all potential boxes
+# all possible boxes on the board
 boxes = cross(rows, cols)
-print(boxes)
+# print(boxes)
+
+# all possible rows on the board
 row_units = [cross(r, cols) for r in rows]
+
+# all possible columns on the board
 column_units = [cross(rows, c) for c in cols]
-square_units = [cross(rs, cs) for rs in ('ABC','DEF','GHI') for cs in ('123','456','789')]
+
+# all possible boxes on the board (should be 9)
+square_units = [cross(rs, cs) for rs in ('ABC', 'DEF', 'GHI') for cs in ('123', '456', '789')]
+
 # unitlist = row_units + column_units + square_units
 d1_units = [[rows[i]+cols[i] for i in range(len(rows))]]
 d2_units = [[rows[i]+cols_rev[i] for i in range(len(rows))]]

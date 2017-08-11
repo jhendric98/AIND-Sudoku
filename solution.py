@@ -33,22 +33,20 @@ def naked_twins(values):
     """
 
     # Find all instances of naked twins
-    # Eliminate the naked twins as possibilities for their peers
-    potential_twins = [box for box in values.keys() if len(values[box]) == 2]
+    # Get a list of boxes with same length. These may be twins but do they have to be len(2)?
+    twins_list = [box for box in values.keys() if len(values[box]) == 2]
 
-    print(potential_twins)
 
     # Collect boxes that have the same elements
-    naked_twins = [[box1, box2] for box1 in potential_twins
+    twins = [[box1, box2] for box1 in twins_list
                    for box2 in peers[box1]
                    if set(values[box1]) == set(values[box2])]
 
-    print(naked_twins)
 
     # For each pair of naked twins,
-    for i in range(len(naked_twins)):
-        box1 = naked_twins[i][0]
-        box2 = naked_twins[i][1]
+    for i in range(len(twins)):
+        box1 = twins[i][0]
+        box2 = twins[i][1]
         # 1- compute intersection of peers
         peers1 = set(peers[box1])
         peers2 = set(peers[box2])

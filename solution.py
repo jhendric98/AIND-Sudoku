@@ -33,24 +33,25 @@ def naked_twins(values):
     """
 
     # Find all instances of naked twins
-    # Get a list of boxes with same length. These may be twins but do they have to be len(2)?
-    twins_list = [box for box in values.keys() if len(values[box]) == 2]
+    # Get a list of boxes with same value length. Even though greater than length 2 would be twins it fails unit test.
+    length2boxes = [box for box in values.keys() if len(values[box]) == 2]
 
+    # get all peers with equal value to form our twins list
+    twins = [[box1, box2] for box1 in length2boxes
+             for box2 in peers[box1]
+             if set(values[box1]) == set(values[box2])]
 
-    # Collect boxes that have the same elements
-    twins = [[box1, box2] for box1 in twins_list
-                   for box2 in peers[box1]
-                   if set(values[box1]) == set(values[box2])]
-
-
-    # For each pair of naked twins,
+    # Process each twin removing peer values
     for i in range(len(twins)):
         box1 = twins[i][0]
         box2 = twins[i][1]
-        # 1- compute intersection of peers
+
+        # Get the intersection of peers using set objects
         peers1 = set(peers[box1])
         peers2 = set(peers[box2])
-        peers_int = peers1 & peers2
+        peers_int = peers1.intersection(peers2)
+
+
         # 2- Delete the two digits in naked twins from all common peers.
         for peer_val in peers_int:
             if len(values[peer_val]) > 2:
@@ -79,17 +80,17 @@ column_units = [cross(rows, c) for c in cols]
 square_units = [cross(rs, cs) for rs in ('ABC', 'DEF', 'GHI') for cs in ('123', '456', '789')]
 
 # unitlist = row_units + column_units + square_units
-d1_units = [[rows[i]+cols[i] for i in range(len(rows))]]
-d2_units = [[rows[i]+cols_rev[i] for i in range(len(rows))]]
+d1_units = [[rows[i] + cols[i] for i in range(len(rows))]]
+d2_units = [[rows[i] + cols_rev[i] for i in range(len(rows))]]
 
-do_diagonal = 1 # Set this flag = 0 for non-diagonal sudoku
+do_diagonal = 1  # Set this flag = 0 for non-diagonal sudoku
 if do_diagonal == 1:
     unitlist = row_units + column_units + square_units + d1_units + d2_units
 else:
     unitlist = row_units + column_units + square_units
 
 units = dict((s, [u for u in unitlist if s in u]) for s in boxes)
-peers = dict((s, set(sum(units[s], []))-set([s])) for s in boxes)
+peers = dict((s, set(sum(units[s], [])) - set([s])) for s in boxes)
 
 
 def grid_values(grid):
@@ -119,10 +120,10 @@ def display(values):
     Input: The sudoku in dictionary form
     Output: None
     """
-    width = 1+max(len(values[s]) for s in boxes)
-    line = '+'.join(['-'*(width*3)]*3)
+    width = 1 + max(len(values[s]) for s in boxes)
+    line = '+'.join(['-' * (width * 3)] * 3)
     for r in rows:
-        print(''.join(values[r+c].center(width)+('|' if c in '36' else '')
+        print(''.join(values[r + c].center(width) + ('|' if c in '36' else '')
                       for c in cols))
         if r in 'CF': print(line)
     return
@@ -227,7 +228,7 @@ if __name__ == '__main__':
     # diag_sudoku_grid ='..3.2.6..9..3.5..1..18.64....81.29..7.......8..67.82....26.95..8..2.3..9..5.1.3..'
     # diag_sudoku_grid = '2.............62....1....7...6..8...3...9...7...6..4...4....8....52.............3'
     # diagonal test
-    diag_sudoku_grid ='2.............62....1....7...6..8...3...9...7...6..4...4....8....52.............3'
+    diag_sudoku_grid = '2.............62....1....7...6..8...3...9...7...6..4...4....8....52.............3'
 
     values = grid_values(diag_sudoku_grid)
     display(values)
@@ -235,6 +236,7 @@ if __name__ == '__main__':
 
     try:
         from visualize import visualize_assignments
+
         visualize_assignments(assignments)
 
     except SystemExit:

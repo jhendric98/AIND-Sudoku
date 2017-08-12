@@ -6,6 +6,9 @@ rows = 'ABCDEFGHI'
 cols = '123456789'
 cols_rev = cols[::-1]
 
+# Set to 1 for diagonal solve and 0 for normal game
+is_diagonal = 1
+
 
 def assign_value(values, box, value):
     """
@@ -79,13 +82,12 @@ column_units = [cross(rows, c) for c in cols]
 # all possible boxes on the board (should be 9)
 square_units = [cross(rs, cs) for rs in ('ABC', 'DEF', 'GHI') for cs in ('123', '456', '789')]
 
-# unitlist = row_units + column_units + square_units
-d1_units = [[rows[i] + cols[i] for i in range(len(rows))]]
-d2_units = [[rows[i] + cols_rev[i] for i in range(len(rows))]]
+# have to calculate the diagonal units for a diagonal game
+units1 = [[rows[i] + cols[i] for i in range(len(rows))]]
+units2 = [[rows[i] + cols_rev[i] for i in range(len(rows))]]
 
-do_diagonal = 1  # Set this flag = 0 for non-diagonal sudoku
-if do_diagonal == 1:
-    unitlist = row_units + column_units + square_units + d1_units + d2_units
+if is_diagonal == 1:
+    unitlist = row_units + column_units + square_units + units1 + units2
 else:
     unitlist = row_units + column_units + square_units
 

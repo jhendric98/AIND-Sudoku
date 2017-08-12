@@ -51,13 +51,13 @@ def naked_twins(values):
         peers2 = set(peers[box2])
         peers_int = peers1.intersection(peers2)
 
+        # Iterate through the intersection and remove twin values from each
+        for boxvalue in peers_int:
+            if len(values[boxvalue]) > 2:
+                for delvalue in values[box1]:
+                    resultvalues = assign_value(values, boxvalue, values[boxvalue].replace(delvalue, ''))
 
-        # 2- Delete the two digits in naked twins from all common peers.
-        for peer_val in peers_int:
-            if len(values[peer_val]) > 2:
-                for rm_val in values[box1]:
-                    values = assign_value(values, peer_val, values[peer_val].replace(rm_val, ''))
-    return values
+    return resultvalues
 
 
 def cross(A, B):

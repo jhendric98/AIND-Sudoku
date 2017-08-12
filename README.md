@@ -3,11 +3,12 @@
 
 # Question 1 (Naked Twins)
 Q: How do we use constraint propagation to solve the naked twins problem?  
-A: *Student should provide answer here*
+A:  When in the first steps of elimination, reducton, and only choice strategies the peers of any box contain two identical possible values, the remaining peers cannot contain the same values. We constrain the possible answers in the remaining peers by removing these values and continuing our solve.
+
 
 # Question 2 (Diagonal Sudoku)
 Q: How do we use constraint propagation to solve the diagonal sudoku problem?  
-A: *Student should provide answer here*
+A: To solve for the diagonal sudoku, we needed to create two diagonal peers groups and add them to the unitlists. This added the constraint of these additional unitlists to the solution and any solutions that do not contain them are rejected.
 
 ### Install
 

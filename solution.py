@@ -6,8 +6,8 @@ rows = 'ABCDEFGHI'
 cols = '123456789'
 cols_rev = cols[::-1]
 
-# Set to 1 for diagonal solve and 0 for normal game
-is_diagonal = 1
+# Set true if diagonal game
+is_diagonal = True
 
 
 def assign_value(values, box, value):
@@ -86,7 +86,7 @@ square_units = [cross(rs, cs) for rs in ('ABC', 'DEF', 'GHI') for cs in ('123', 
 units1 = [[rows[i] + cols[i] for i in range(len(rows))]]
 units2 = [[rows[i] + cols_rev[i] for i in range(len(rows))]]
 
-if is_diagonal == 1:
+if is_diagonal:
     unitlist = row_units + column_units + square_units + units1 + units2
 else:
     unitlist = row_units + column_units + square_units

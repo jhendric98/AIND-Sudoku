@@ -1,4 +1,6 @@
 import sys
+import logging
+logging.basicConfig(filename='solution.log', level=logging.DEBUG)
 
 assignments = []
 
@@ -58,9 +60,9 @@ def naked_twins(values):
         for boxvalue in peers_int:
             if len(values[boxvalue]) > 2:
                 for delvalue in values[box1]:
-                    resultvalues = assign_value(values, boxvalue, values[boxvalue].replace(delvalue, ''))
-
-    return resultvalues
+                    values = assign_value(values, boxvalue, values[boxvalue].replace(delvalue, ''))
+    logging.debug(display(values))
+    return values
 
 
 def cross(A, B):
@@ -128,6 +130,7 @@ def display(values):
         print(''.join(values[r + c].center(width) + ('|' if c in '36' else '')
                       for c in cols))
         if r in 'CF': print(line)
+    print("\n")
     return
 
 
@@ -223,17 +226,20 @@ def solve(grid):
     Returns:
         The dictionary representation of the final sudoku grid. False if no solution exists.
     """
-    return reduce_puzzle(grid_values(grid))
+    return reduce_puzzle(naked_twins(reduce_puzzle(grid_values(grid))))
 
 
 if __name__ == '__main__':
     # diag_sudoku_grid ='..3.2.6..9..3.5..1..18.64....81.29..7.......8..67.82....26.95..8..2.3..9..5.1.3..'
     # diag_sudoku_grid = '2.............62....1....7...6..8...3...9...7...6..4...4....8....52.............3'
     # diagonal test
-    diag_sudoku_grid = '2.............62....1....7...6..8...3...9...7...6..4...4....8....52.............3'
+    # diag_sudoku_grid = '2.............62....1....7...6..8...3...9...7...6..4...4....8....52.............3'
+    diag_sudoku_grid = '9.1....8.8.5.7..4.2.4....6...7......5..............83.3..6......9................'
 
     values = grid_values(diag_sudoku_grid)
+    print("\nStarting puzzle: \n")
     display(values)
+    print("\nSolved puzzle: \n")
     display(solve(diag_sudoku_grid))
 
     try:

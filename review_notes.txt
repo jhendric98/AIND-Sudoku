@@ -1,0 +1,44 @@
+logging with default level ERROR could be added to debug the code.
+Logs can also help to understand the algorithms.
+Please have a look at this link : https://docs.python.org/3/howto/logging.html.
+Assert statements could be used too https://wiki.python.org/moin/UsingAssertionsEffectively
+
+
+
+# Find all instances of naked twins
+
+    # loop over units checking if there is are any naked twins
+
+        # get all boxes with a length of two
+
+
+        # now get all the naked pair twins ie exists twice in pairs
+
+
+        # iterate through the naked_twins removing the values from the non naked twin boxes
+
+
+            # loop over the boxes in the unit and remove the pair from them
+            # we could use peers as instead but would still need the check to
+            # ensure we aren't impacting the other naked twin
+
+                # test to ensure we don't eliminate the values from either naked-twin
+
+                    # Eliminate the naked twins as possibilities for their peers
+                    # the sorted is required for passing the test assertions as the box values
+                    # are expected to be in numerical order.
+
+
+Good job (y) Additional constraints for diagonal sudoku implemented successfully :)
+You could implement this using list comprehension and zip in the foll way:-
+diagonal_units = [[r+c for r,c in zip(rows,cols)], [r+c for r,c in zip(rows,cols[::-1])]]
+To see more tips and tricks you could go to : http://www.petercollingridge.co.uk/book/export/html/362
+
+
+Needs Rework:
+
+Functionality
+The student correctly uses constraint propagation to solve the naked twins problem by
+    enforcing the constraint that no squares outside the two naked twins squares can contain the twin values
+
+The student correctly solves the diagonal sudoku using constraint propagation by adding the new constraint of the diagonal sudoku

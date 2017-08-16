@@ -9,7 +9,7 @@ cols = '123456789'
 cols_rev = cols[::-1]
 
 # Set true if diagonal game
-is_diagonal = True
+is_diagonal = False
 
 
 def assign_value(values, box, value):
@@ -41,10 +41,16 @@ def naked_twins(values):
     # Get a list of boxes with same value length. Even though greater than length 2 would be twins it fails unit test.
     length2boxes = [box for box in values.keys() if len(values[box]) == 2]
 
+    print("length2boxes")
+    print(length2boxes)
+
     # get all peers with equal value to form our twins list
     twins = [[box1, box2] for box1 in length2boxes
              for box2 in peers[box1]
              if set(values[box1]) == set(values[box2])]
+
+    print("twins")
+    print(twins)
 
     # Process each twin removing peer values
     for i in range(len(twins)):
@@ -234,7 +240,9 @@ if __name__ == '__main__':
     # diag_sudoku_grid = '2.............62....1....7...6..8...3...9...7...6..4...4....8....52.............3'
     # diagonal test
     # diag_sudoku_grid = '2.............62....1....7...6..8...3...9...7...6..4...4....8....52.............3'
-    diag_sudoku_grid = '9.1....8.8.5.7..4.2.4....6...7......5..............83.3..6......9................'
+    # diag_sudoku_grid = '9.1....8.8.5.7..4.2.4....6...7......5..............83.3..6......9................'
+    # this one demo's naked twins with the fail
+    diag_sudoku_grid = '5.9.2..1.4...56...8..9.3..5.87..25..654....82..15684971.82.5...7..68...3.4..7.8..'
 
     values = grid_values(diag_sudoku_grid)
     print("\nStarting puzzle: \n")

@@ -38,7 +38,7 @@ def naked_twins(values):
     """
 
     # Find all instances of naked twins
-    # Get a list of boxes with same value length. Even though greater than length 2 would be twins it fails unit test.
+    # Get a list of boxes with same value length and length 2.
     length2boxes = [box for box in values.keys() if len(values[box]) == 2]
 
     print("length2boxes")
@@ -57,16 +57,29 @@ def naked_twins(values):
         box1 = twins[i][0]
         box2 = twins[i][1]
 
+        print(box1)
+        print(values[box1])
+        print(box2)
+        print(values[box2])
+        print(twins[i])
+
         # Get the intersection of peers using set objects
         peers1 = set(peers[box1])
         peers2 = set(peers[box2])
-        peers_int = peers1.intersection(peers2)
+        peers_int = peers1.union(peers2)
 
         # Iterate through the intersection and remove twin values from each
         for boxvalue in peers_int:
-            if len(values[boxvalue]) > 2:
-                for delvalue in values[box1]:
-                    values = assign_value(values, boxvalue, values[boxvalue].replace(delvalue, ''))
+            digits = values[boxvalue]
+            assign_value(values, boxvalue, values[boxvalue].replace(digits[0], ""))
+            assign_value(values, boxvalue, values[boxvalue].replace(digits[1], ""))
+            values[boxvalue] = values[boxvalue].replace(digits[0], "")
+            values[boxvalue] = values[boxvalue].replace(digits[1], "")
+
+            # if len(values[boxvalue]) > 2:
+            #     for delvalue in values[box1]:
+            #         values = assign_value(values, boxvalue, values[boxvalue].replace(delvalue, ''))
+
     logging.debug(display(values))
     return values
 
@@ -101,6 +114,9 @@ else:
 
 units = dict((s, [u for u in unitlist if s in u]) for s in boxes)
 peers = dict((s, set(sum(units[s], [])) - set([s])) for s in boxes)
+
+print("peers")
+print(peers)
 
 
 def grid_values(grid):

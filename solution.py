@@ -56,19 +56,24 @@ def naked_twins(values):
         peers2 = set(peers[box2])
         peers_int = peers1.union(peers2)
 
+        # remove original twins from combined set of peers
+        peers_int.remove(box1)
+        peers_int.remove(box2)
+
+        print("peers boxes: " + str(peers_int))
+
+
         # Iterate through the intersection and remove twin values from each
         for boxvalue in peers_int:
-            print(boxvalue)
-            digits = values[boxvalue]
+            print("peer: " + boxvalue + " " + str(values[boxvalue]))
+
+            digits = values[box1]
             print(digits)
             for num in digits:
                 print(num)
-                #assign_value(values, boxvalue, values[boxvalue].replace(num, ""))
-                # values[boxvalue] = values[boxvalue].replace(digits[0], "")
-
-            # if len(values[boxvalue]) > 2:
-            #     for delvalue in values[box1]:
-            #         values = assign_value(values, boxvalue, values[boxvalue].replace(delvalue, ''))
+                assign_value(values, boxvalue, values[boxvalue].replace(num, ""))
+                values[boxvalue] = values[boxvalue].replace(digits[0], "")
+                print(str(values[boxvalue]))
 
     logging.debug(display(values))
     return values

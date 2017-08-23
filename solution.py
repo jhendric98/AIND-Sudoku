@@ -37,6 +37,8 @@ def naked_twins(values):
         the values dictionary with the naked twins eliminated from peers.
     """
 
+    display(values)
+
     # Find all instances of naked twins
     # Get a list of boxes with same value length and length 2.
     length2boxes = [box for box in values.keys() if len(values[box]) == 2]
@@ -64,18 +66,22 @@ def naked_twins(values):
 
 
         # Iterate through the intersection and remove twin values from each
-        for boxvalue in peers_int:
-            print("peer: " + boxvalue + " " + str(values[boxvalue]))
+        for peer in peers_int:
+            print("peer: " + peer + " " + str(values[peer]))
 
             digits = values[box1]
             print(digits)
-            for num in digits:
-                print(num)
-                assign_value(values, boxvalue, values[boxvalue].replace(num, ""))
-                values[boxvalue] = values[boxvalue].replace(digits[0], "")
-                print(str(values[boxvalue]))
+            for digit in digits:
+                print("Starting box value: " + str(values[peer]))
+                print(digit)
 
-    logging.debug(display(values))
+                if len(values[peer]) > 1:
+                    values[peer] = values[peer].replace(digit, '')
+                    assign_value(values, peer, values[peer].replace(digit, ''))
+
+                print("Box value after removing peer digit: " + str(values[peer]))
+
+    display(values)
     return values
 
 
@@ -240,7 +246,7 @@ def solve(grid):
     Returns:
         The dictionary representation of the final sudoku grid. False if no solution exists.
     """
-    return reduce_puzzle(naked_twins(reduce_puzzle(grid_values(grid))))
+    return naked_twins(reduce_puzzle(grid_values(grid)))
 
 
 if __name__ == '__main__':
@@ -256,15 +262,17 @@ if __name__ == '__main__':
     print("\nStarting puzzle: \n")
     display(values)
     print("\nSolved puzzle: \n")
-    display(solve(diag_sudoku_grid))
+    # display(solve(diag_sudoku_grid))
+    results = solve(diag_sudoku_grid)
+    display(results)
 
-    try:
-        from visualize import visualize_assignments
-
-        visualize_assignments(assignments)
-
-    except SystemExit:
-        sys.exit()
-
-    except:
-        print('We could not visualize your board due to a pygame issue. Not a problem! It is not a requirement.')
+    # try:
+    #     from visualize import visualize_assignments
+    #
+    #     visualize_assignments(assignments)
+    #
+    # except SystemExit:
+    #     sys.exit()
+    #
+    # except:
+    #     print('We could not visualize your board due to a pygame issue. Not a problem! It is not a requirement.')

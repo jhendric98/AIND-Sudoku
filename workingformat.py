@@ -22,18 +22,6 @@
                         # are expected to be in numerical order.
 
 
-# assign_value(values, box, values[box].replace(digits[0], ""))
-# assign_value(values, box, values[box].replace(digits[1], ""))
-# values[box] = values[box].replace(digits[0], "")
-# values[box] = values[box].replace(digits[1], "")
 
 
-'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8', 'A9'
-'B1', 'B2', 'B3'
-'C1', 'C2', 'C3'
-'D1'
-'E1' 
-'F1'
-'G1'
-'H1'
-'I1'
+

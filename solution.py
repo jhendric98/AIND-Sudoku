@@ -36,9 +36,6 @@ def naked_twins(values):
     Returns:
         the values dictionary with the naked twins eliminated from peers.
     """
-
-    display(values)
-
     # Find all instances of naked twins
     # Get a list of boxes with same value length and length 2.
     length2boxes = [box for box in values.keys() if len(values[box]) == 2]
@@ -47,6 +44,13 @@ def naked_twins(values):
     twins = [[box1, box2] for box1 in length2boxes
              for box2 in peers[box1]
              if set(values[box1]) == set(values[box2])]
+
+    # get a distinct list of twins to remove from future peer lists
+    twinlist = list()
+    for box1, box2 in twins:
+        twinlist.append(box1)
+        twinlist.append(box2)
+        twinlist = list(set(twinlist))
 
     # Process each twin removing peer values
     for i in range(len(twins)):
@@ -59,29 +63,18 @@ def naked_twins(values):
         peers_int = peers1.union(peers2)
 
         # remove original twins from combined set of peers
-        peers_int.remove(box1)
-        peers_int.remove(box2)
-
-        print("peers boxes: " + str(peers_int))
-
+        for box in twinlist:
+            peers_int.remove(box)
 
         # Iterate through the intersection and remove twin values from each
         for peer in peers_int:
-            print("peer: " + peer + " " + str(values[peer]))
-
             digits = values[box1]
-            print(digits)
+
             for digit in digits:
-                print("Starting box value: " + str(values[peer]))
-                print(digit)
 
                 if len(values[peer]) > 1:
                     values[peer] = values[peer].replace(digit, '')
                     assign_value(values, peer, values[peer].replace(digit, ''))
-
-                print("Box value after removing peer digit: " + str(values[peer]))
-
-    display(values)
     return values
 
 
@@ -262,9 +255,7 @@ if __name__ == '__main__':
     print("\nStarting puzzle: \n")
     display(values)
     print("\nSolved puzzle: \n")
-    # display(solve(diag_sudoku_grid))
-    results = solve(diag_sudoku_grid)
-    display(results)
+    display(solve(diag_sudoku_grid))
 
     # try:
     #     from visualize import visualize_assignments
